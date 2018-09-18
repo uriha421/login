@@ -17,10 +17,10 @@ func authHandler(w http.ResponseWriter, r *http.Request) {
 
 	// get a map of email and password
 	err = r.ParseForm()
-  if err != nil {
-    // fail
-    http.Redirect(w, r, "/login", 302)
-  }
+	if err != nil {
+		// fail
+		http.Redirect(w, r, "/login", 302)
+	}
 
 	// get a user from database by email
 	user, err = getUserByEmail(r.PostFormValue("email"))

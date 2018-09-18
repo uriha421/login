@@ -1,7 +1,7 @@
 package main
 
 import (
-  "time"
+	"time"
 )
 
 type User struct {
@@ -22,24 +22,23 @@ type Session struct {
 }
 
 func getUserByEmail(email string) (u User, err error) {
-  u := User{}
-  err = dB.QueryRow("SELECT id, uuid, name, password, created_at FROM users WHERE email = $1 returning id,
-  uuid, name, password, created_at", email).Scan(&u.Id, &u.Uuid, &u.Name, &u.Password, &u.CreatedAt)
-  return
+	u := User{}
+	err = dB.QueryRow("SELECT id, uuid, name, password, created_at FROM users WHERE email = $1 returning id, uuid, name, password, created_at", email).Scan(&u.Id, &u.Uuid, &u.Name, &u.Password, &u.CreatedAt)
+	return
 }
 
 func notYetRegistered(email string) (b bool, err error) {
-    // TODO
-  // err = dB.QueryRow("select count(*) from users where email = $1", email)
-  b = true
-  err = nil
-  return
+	// TODO
+	// err = dB.QueryRow("select count(*) from users where email = $1", email)
+	b = true
+	err = nil
+	return
 }
 
 func (u *User) createUser() (err error) {
-  err = dB.QueryRow("INSERT into users (uuid, name, email, password, created_at) values ($1, $2, $3, $4, $5) returning id",
-  u.Uuid, u.Name, u.Email, u.Password, u.CreatedAt).Scan(&u.Id)
-  return
+	err = dB.QueryRow("INSERT into users (uuid, name, email, password, created_at) values ($1, $2, $3, $4, $5) returning id",
+		u.Uuid, u.Name, u.Email, u.Password, u.CreatedAt).Scan(&u.Id)
+	return
 }
 
 func createUUID() (uuid string) {
@@ -59,8 +58,7 @@ func createUUID() (uuid string) {
 }
 
 func (u *User) createSession() (s Session, err error) {
-  err = dB.QueryRow("INSERT into sessions (uuid, email, user_id, created_at) values ($1, $2, $3, $4) returning id,
-  uuid, email, user_id, created_at", CreateUUID(), u.Email, u.UserId, time.Now()).
-  Scan(&s.Id, &s.Uuid, &s.Email, &s.UserId, &s.CreatedAt)
-  return
+	err = dB.QueryRow("INSERT into sessions (uuid, email, user_id, created_at) values ($1, $2, $3, $4) returning id, uuid, email, user_id, created_at", CreateUUID(), u.Email, u.UserId, time.Now()).
+		Scan(&s.Id, &s.Uuid, &s.Email, &s.UserId, &s.CreatedAt)
+	return
 }

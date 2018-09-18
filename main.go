@@ -10,7 +10,7 @@ func main() {
 	}
 	http.HandleFunc("/login", loginHandler)
 	http.HandleFunc("/auth", authHandler)
-  http.HandleFunc("/signup", signupHandler)
-  http.HandleFunc("/register", registerHandler)
+	http.HandleFunc("/signup", signupHandler)
+	http.HandleFunc("/register", registerHandler)
 	server.ListenAndServe()
 }
