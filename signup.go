@@ -1,6 +1,10 @@
 package main
 
 import (
+	"golang.org/x/crypto/bcrypt"
+	"html/template"
+	"log"
+	"net/http"
 	"time"
 )
 
@@ -20,7 +24,7 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// check email
-	b, err = notYetRegistered(r.PostFormValue("email"))
+	b, err := notYetRegistered(r.PostFormValue("email"))
 	if !b || err != nil {
 		// fail
 		http.Redirect(w, r, "/login", 302)
@@ -37,12 +41,12 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 		Uuid:      createUUID(),
 		Name:      r.PostFormValue("name"),
 		Email:     r.PostFormValue("email"),
-		Password:  hashPassword,
+		Password:  string(hashPassword),
 		CreatedAt: time.Now(),
 	}
 
 	// create a user in database
-	user.Create()
+	user.create()
 
 	// succeed in signup
 	http.Redirect(w, r, "/", 302)
