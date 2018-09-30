@@ -1,62 +1,42 @@
 package main
 
 import (
-	"fmt"
 	"html/template"
 	"log"
 	"net/http"
+	"path/filepath"
+	"sync"
 )
 
-func loginHandler(w http.ResponseWriter, r *http.Request) {
-	t := template.Must(template.ParseFiles("templates/login.html"))
-	t.Execute(w, nil)
+// a template with its filename
+type templateHandler struct {
+	once     sync.Once
+	filename string
+	templ    *template.Template
 }
 
-func authHandler(w http.ResponseWriter, r *http.Request) {
-	r.ParseForm()
+func (t *templateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	t.once.Do(func() {
+		t.templ = template.Must(template.ParseFiles(filepath.Join("templates", t.filename)))
+	})
 
-	user, err := getUserByEmail(r.PostFormValue("email"))
-
-	if user.Password != r.PostFormValue("password") {
-		fmt.Println("invalid password")
-	}
-
-	session, err := user.createSession()
+	err := t.templ.Execute(w, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	cookie := http.Cookie{
-		Name:     "_cookie",
-		Value:    session.Uuid,
-		HttpOnly: true,
-	}
-	http.SetCookie(w, &cookie)
-
-	http.Redirect(w, r, "/", 302)
-}
-
-func indexHandler(w http.ResponseWriter, r *http.Request) {
-	session, err := session(w, r)
-	if err != nil {
-		fmt.Println("error")
-		http.Redirect(w, r, "/login", 302)
-	}
-
-	fmt.Println(session)
-
-	t := template.Must(template.ParseFiles("templates/index.html"))
-	t.Execute(w, nil)
 }
 
 func main() {
+
 	server := http.Server{
 		Addr: "localhost:8080",
 	}
 
-	http.HandleFunc("/", indexHandler)
-	http.HandleFunc("/login", loginHandler)
-	http.HandleFunc("/auth", authHandler)
+	http.Handle("/signup", &templateHandler{filename: "signup.html"})
+	http.HandleFunc("/setuser", setUser)
+
+	http.Handle("/signin", &templateHandler{filename: "signin.html"})
+	http.HandleFunc("/authuser", authUser)
 
 	server.ListenAndServe()
 }
