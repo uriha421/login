@@ -1,5 +1,6 @@
 drop table if exists users cascade;
 drop table if exists sessions;
+drop table if exists todos;
 
 create table users (
     id		serial primary key,
@@ -15,3 +16,11 @@ create table sessions (
     created_at	timestamp not null
 );
 
+create table todos (
+    id		serial primary key,
+    user_id	integer references users(id),
+    content	text not null,
+    completed	smallint not null,
+    due		timestamp not null,
+    created_at	timestamp not null
+);
