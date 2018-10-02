@@ -29,5 +29,5 @@ func setUser(w http.ResponseWriter, r *http.Request) {
 	}
 	u.createUser()
 
-	http.Redirect(w, r, "/showtodos", 302)
+	http.Redirect(w, r, "/signin", 302)
 }

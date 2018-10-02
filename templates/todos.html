@@ -4,6 +4,13 @@
 </head>
 <body>
 
+<form action="/addtodos" method="post">
+    DUE:<input type="text" name="due"><br>
+    COMPLETED:<input type="text" name="completed"><br>
+    BODY:<input type="text" name="body"><br>
+    <button type="submit">ADD</button>
+</form>
+
 <table>
 <tr>
 <td>DUE</td>
@@ -18,13 +25,6 @@
 </tr>
 {{ end }}
 </table>
-
-<form action="/addtodos" method="post">
-    <input type="text" name="due">
-    <input type="text" name="completed">
-    <input type="text" name="body">
-    <button type="submit">ADD</button>
-</form>
 
 <body>
 <html>

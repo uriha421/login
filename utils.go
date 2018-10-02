@@ -64,18 +64,18 @@ func addTodos(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// parse due
-	layout := "2006-01-02 15:04:05"
-	parsedTime, err := time.Parse(r.PostFormValue("due"), layout)
-	if err != nil {
-		log.Fatal(err)
-	}
+	// layout := "2006-01-02 15:04:05"
+	// parsedTime, err := time.Parse(r.PostFormValue("due"), layout)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
 
 	// create a todo
 	t := Todo{
 		UserId:    s.UserId,
 		Body:      r.PostFormValue("body"),
 		Completed: completed,
-		Due:       parsedTime,
+		Due:       time.Now(),
 		CreatedAt: time.Now(),
 	}
 	t.createTodo()

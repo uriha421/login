@@ -34,7 +34,7 @@ func (t *Todo) putDue(ti time.Time) {
 }
 
 func getTodos(u int) (ts []Todo, err error) {
-	rows, err := Db.Query("SELECT (body, completed, due) from todos WHERE user_id = $1", u)
+	rows, err := Db.Query("SELECT body, completed, due from todos WHERE user_id = $1", u)
 	if err != nil {
 		return
 	}
