@@ -46,3 +46,8 @@ func (u *User) createSession() (s Session, err error) {
 	err = Db.QueryRow("INSERT into sessions (uuid, user_id, created_at) values ($1, $2, $3) returning id, uuid, user_id, created_at", uuid.New(), u.Id, time.Now()).Scan(&s.Id, &s.Uuid, &s.UserId, &s.CreatedAt)
 	return
 }
+
+func (s *Session) check() (b bool, err error) {
+	err = Db.QueryRow("SELECT (id, uuid, user_id, created_at) FROM sessions WHERE uuid = $1", s.Uuid).Scan(&s.Id, &s.Uuid, &s.UserId, &s.CreatedAt)
+	return
+}

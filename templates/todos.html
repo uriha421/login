@@ -1,0 +1,30 @@
+<html>
+<head>
+    <title>TODOS</title>
+</head>
+<body>
+
+<table>
+<tr>
+<td>DUE</td>
+<td>COMPLETED</td>
+<td>BODY</td>
+</tr>
+{{ range .Todos}}
+<tr>
+<td>{{ .Due }}</td>
+<td>{{ .Completed }}</td>
+<td>{{ .Body }}</td>
+</tr>
+{{ end }}
+</table>
+
+<form action="/addtodos" method="post">
+    <input type="text" name="due">
+    <input type="text" name="completed">
+    <input type="text" name="body">
+    <button type="submit">ADD</button>
+</form>
+
+<body>
+<html>

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 
@@ -41,5 +40,5 @@ func authUser(w http.ResponseWriter, r *http.Request) {
 	}
 	http.SetCookie(w, &cookie)
 
-	fmt.Fprintln(w, "you have succeeded in sign in")
+	http.Redirect(w, r, "/showtodos", 302)
 }

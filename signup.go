@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"golang.org/x/crypto/bcrypt"
 	"log"
 	"net/http"
@@ -30,5 +29,5 @@ func setUser(w http.ResponseWriter, r *http.Request) {
 	}
 	u.createUser()
 
-	fmt.Fprintln(w, "you have succeeded in sign up")
+	http.Redirect(w, r, "/showtodos", 302)
 }

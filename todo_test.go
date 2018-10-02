@@ -18,11 +18,11 @@ func TestCreateTodo(t *testing.T) {
 	}
 
 	todo := Todo{
-	    UserId: u.Id,
-	    Content: "I MUST SAY HELLO WORLD",
-	    Completed: 0,
-	    Due: time.Now(),
-	    CreatedAt: time.Now(),
+		UserId:    u.Id,
+		Body:      "I MUST SAY HELLO WORLD",
+		Completed: 0,
+		Due:       time.Now(),
+		CreatedAt: time.Now(),
 	}
 
 	err = todo.createTodo()
@@ -31,8 +31,7 @@ func TestCreateTodo(t *testing.T) {
 	}
 }
 
-
-func TestPutContent(t *testing.T) {
+func TestPutBody(t *testing.T) {
 	u := User{
 		Email:     "example@gmail.com",
 		Password:  []byte("password"),
@@ -45,11 +44,11 @@ func TestPutContent(t *testing.T) {
 	}
 
 	todo := Todo{
-	    UserId: u.Id,
-	    Content: "I MUST SAY HELLO WORLD",
-	    Completed: 0,
-	    Due: time.Now(),
-	    CreatedAt: time.Now(),
+		UserId:    u.Id,
+		Body:      "I MUST SAY HELLO WORLD",
+		Completed: 0,
+		Due:       time.Now(),
+		CreatedAt: time.Now(),
 	}
 
 	err = todo.createTodo()
@@ -57,7 +56,7 @@ func TestPutContent(t *testing.T) {
 		t.Fatalf("failed to createTodo %#v", err)
 	}
 
-	todo.putContent("I HAVE TO SAY HELLO WORLD")
+	todo.putBody("I HAVE TO SAY HELLO WORLD")
 }
 
 func TestPutCompleted(t *testing.T) {
@@ -73,11 +72,11 @@ func TestPutCompleted(t *testing.T) {
 	}
 
 	todo := Todo{
-	    UserId: u.Id,
-	    Content: "I MUST SAY HELLO WORLD",
-	    Completed: 0,
-	    Due: time.Now(),
-	    CreatedAt: time.Now(),
+		UserId:    u.Id,
+		Body:      "I MUST SAY HELLO WORLD",
+		Completed: 0,
+		Due:       time.Now(),
+		CreatedAt: time.Now(),
 	}
 
 	err = todo.createTodo()
@@ -87,7 +86,6 @@ func TestPutCompleted(t *testing.T) {
 
 	todo.putCompleted(50)
 }
-
 
 func TestPutDue(t *testing.T) {
 	u := User{
@@ -102,11 +100,11 @@ func TestPutDue(t *testing.T) {
 	}
 
 	todo := Todo{
-	    UserId: u.Id,
-	    Content: "I MUST SAY HELLO WORLD",
-	    Completed: 0,
-	    Due: time.Now(),
-	    CreatedAt: time.Now(),
+		UserId:    u.Id,
+		Body:      "I MUST SAY HELLO WORLD",
+		Completed: 0,
+		Due:       time.Now(),
+		CreatedAt: time.Now(),
 	}
 
 	err = todo.createTodo()
@@ -118,5 +116,3 @@ func TestPutDue(t *testing.T) {
 
 	todo.putDue(time.Now())
 }
-
-

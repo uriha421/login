@@ -38,5 +38,7 @@ func main() {
 	http.Handle("/signin", &templateHandler{filename: "signin.html"})
 	http.HandleFunc("/authuser", authUser)
 
+	http.HandleFunc("/showtodos", showTodos)
+	http.HandleFunc("/addtodos", addTodos)
 	server.ListenAndServe()
 }

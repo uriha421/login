@@ -19,7 +19,7 @@ create table sessions (
 create table todos (
     id		serial primary key,
     user_id	integer references users(id),
-    content	text not null,
+    body	text not null,
     completed	smallint not null,
     due		timestamp not null,
     created_at	timestamp not null
