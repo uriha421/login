@@ -82,3 +82,42 @@ func addTodos(w http.ResponseWriter, r *http.Request) {
 
 	http.Redirect(w, r, "/showtodos", 302)
 }
+
+func addTodos(w http.ResponseWriter, r *http.Request) {
+	// check the session
+	s, err := session(w, r)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// parse the request body
+	err = r.ParseForm()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// parse completed
+	completed, err := strconv.Atoi(r.PostFormValue("completed"))
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// parse due
+	// layout := "2006-01-02 15:04:05"
+	// parsedTime, err := time.Parse(r.PostFormValue("due"), layout)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	// create a todo
+	t := Todo{
+		UserId:    s.UserId,
+		Body:      r.PostFormValue("body"),
+		Completed: completed,
+		Due:       time.Now(),
+		CreatedAt: time.Now(),
+	}
+	t.createTodo()
+
+	http.Redirect(w, r, "/showtodos", 302)
+}
